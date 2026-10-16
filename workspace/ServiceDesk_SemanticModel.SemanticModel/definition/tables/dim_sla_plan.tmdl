@@ -1,0 +1,33 @@
+/// The customer’s SLA service tier: standard, gold, or platinum. Combined with priority to determine the SLA breach threshold in dim_sla_target. Sourced directly from the ticket dataset.
+table dim_sla_plan
+	lineageTag: c5380f62-0502-4088-8ad5-df4f3fd68677
+	sourceLineageTag: [dbo].[dim_sla_plan]
+
+	column sla_plan
+		dataType: string
+		lineageTag: e63acc14-ea50-40a6-a94c-5ed0e656555f
+		sourceLineageTag: sla_plan
+		summarizeBy: none
+		sourceColumn: sla_plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column sla_plan_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 032cfecf-0330-41b5-a51e-d731a1a1c285
+		sourceLineageTag: sla_plan_key
+		summarizeBy: none
+		sourceColumn: sla_plan_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_sla_plan = entity
+		mode: directLake
+		source
+			entityName: dim_sla_plan
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

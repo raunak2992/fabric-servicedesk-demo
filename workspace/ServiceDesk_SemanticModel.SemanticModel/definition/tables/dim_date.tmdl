@@ -1,0 +1,66 @@
+/// Standard calendar date dimension spanning the full range of ticket creation dates in the dataset, one row per day. Marked as the model’s official date table for time-intelligence calculations.
+table dim_date
+	lineageTag: 5178d548-873b-4356-a7af-935509b5f984
+	sourceLineageTag: [dbo].[dim_date]
+	dataCategory: Time
+
+	column date
+		dataType: dateTime
+		isKey
+		formatString: General Date
+		lineageTag: cc033109-f235-4eb1-b102-18854a3521d0
+		sourceLineageTag: date
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 955563b6-b313-4ad3-b2d4-43af8199e38b
+		sourceLineageTag: date_key
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: a77cdd22-28be-4f0d-ad32-e647e18e3797
+		sourceLineageTag: year
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: edb7fa3e-dccf-4148-b02f-05f353a21403
+		sourceLineageTag: month
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: b6d20a17-b8f7-44f1-a89b-d421c51e21a1
+		sourceLineageTag: quarter
+		summarizeBy: none
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = entity
+		mode: directLake
+		source
+			entityName: dim_date
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

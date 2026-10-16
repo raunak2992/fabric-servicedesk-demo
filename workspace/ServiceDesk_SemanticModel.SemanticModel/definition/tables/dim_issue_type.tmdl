@@ -1,0 +1,33 @@
+/// Category of the ticket’s underlying issue: bug, how_to, feature_request, billing_problem, account_access, performance, security_concern, or other. Sourced directly from the ticket dataset.
+table dim_issue_type
+	lineageTag: 8aeb114e-52d1-42bf-919e-4c962eb99969
+	sourceLineageTag: [dbo].[dim_issue_type]
+
+	column issue_type
+		dataType: string
+		lineageTag: 8b401d77-c317-470a-9986-1e74a815e712
+		sourceLineageTag: issue_type
+		summarizeBy: none
+		sourceColumn: issue_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column issue_type_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 508fdd2c-e154-45e2-ab75-e012bf91a7b4
+		sourceLineageTag: issue_type_key
+		summarizeBy: none
+		sourceColumn: issue_type_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_issue_type = entity
+		mode: directLake
+		source
+			entityName: dim_issue_type
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

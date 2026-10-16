@@ -1,0 +1,33 @@
+/// The product area affected by the reported issue (billing, login_auth, mobile_app, analytics_dashboard, api_integration, data_export, notifications). Sourced directly from the ticket dataset.
+table dim_product
+	lineageTag: 0404d176-463a-4868-9ab7-89bdfc84e5fd
+	sourceLineageTag: [dbo].[dim_product]
+
+	column product_area
+		dataType: string
+		lineageTag: f2d32d3e-b133-43ca-8a9d-7910c98924ce
+		sourceLineageTag: product_area
+		summarizeBy: none
+		sourceColumn: product_area
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 889f8149-ce2b-4e47-a32f-d568cfef5e39
+		sourceLineageTag: product_key
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_product = entity
+		mode: directLake
+		source
+			entityName: dim_product
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

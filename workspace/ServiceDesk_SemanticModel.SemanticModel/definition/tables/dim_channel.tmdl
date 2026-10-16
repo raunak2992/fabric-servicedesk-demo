@@ -1,0 +1,33 @@
+/// Synthetic SLA policy defined for this demo (target resolution hours by sla_plan × priority). The source dataset includes actual resolution times but no stated SLA contract, so these thresholds were authored to enable breach analysis.
+table dim_channel
+	lineageTag: e50568b2-d7f9-41fa-b7a2-dc2954c54d76
+	sourceLineageTag: [dbo].[dim_channel]
+
+	column channel
+		dataType: string
+		lineageTag: fa6bff59-0b7e-4150-a008-0f17ba06701a
+		sourceLineageTag: channel
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 17d60c65-b5bc-43a6-a36b-6228f6f0972c
+		sourceLineageTag: channel_key
+		summarizeBy: none
+		sourceColumn: channel_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_channel = entity
+		mode: directLake
+		source
+			entityName: dim_channel
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

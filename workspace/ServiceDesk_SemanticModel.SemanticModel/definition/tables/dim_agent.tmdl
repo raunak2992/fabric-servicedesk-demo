@@ -1,0 +1,60 @@
+/// Synthetic agent roster generated for this demo. The source dataset does not include agent identity; tickets were randomly assigned to one of 30 fabricated agents for illustration purposes only.
+table dim_agent
+	lineageTag: 9d3a2d3e-fbc2-4dd7-8edb-278e3053ba68
+	sourceLineageTag: [dbo].[dim_agent]
+
+	column agent_id
+		dataType: string
+		lineageTag: d4b23475-6c0b-468d-bf46-6d7245e63a0e
+		sourceLineageTag: agent_id
+		summarizeBy: none
+		sourceColumn: agent_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column agent_name
+		dataType: string
+		lineageTag: cdbdcb4a-161d-456e-b109-01e1d9ca1483
+		sourceLineageTag: agent_name
+		summarizeBy: none
+		sourceColumn: agent_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column seniority
+		dataType: string
+		lineageTag: 5569e3cf-d3da-4f71-8a6b-4822a087d273
+		sourceLineageTag: seniority
+		summarizeBy: none
+		sourceColumn: seniority
+
+		annotation SummarizationSetBy = Automatic
+
+	column team
+		dataType: string
+		lineageTag: 5682ba71-3f91-4733-bf95-91c5194e17fb
+		sourceLineageTag: team
+		summarizeBy: none
+		sourceColumn: team
+
+		annotation SummarizationSetBy = Automatic
+
+	column agent_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 599ecc35-4597-48ea-a110-642f96ce4bc5
+		sourceLineageTag: agent_key
+		summarizeBy: none
+		sourceColumn: agent_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_agent = entity
+		mode: directLake
+		source
+			entityName: dim_agent
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

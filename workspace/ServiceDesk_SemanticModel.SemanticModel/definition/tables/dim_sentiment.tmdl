@@ -1,0 +1,33 @@
+/// Customer sentiment inferred from the ticket’s message content: very_negative, negative, neutral, positive, or very_positive. Sourced directly from the ticket dataset.
+table dim_sentiment
+	lineageTag: 810b825a-63f5-4865-ba63-be9cfe8b01d8
+	sourceLineageTag: [dbo].[dim_sentiment]
+
+	column customer_sentiment
+		dataType: string
+		lineageTag: 52df1a09-3168-4162-8e14-5f55cf9445e8
+		sourceLineageTag: customer_sentiment
+		summarizeBy: none
+		sourceColumn: customer_sentiment
+
+		annotation SummarizationSetBy = Automatic
+
+	column sentiment_key
+		dataType: int64
+		formatString: 0
+		lineageTag: b68d8c1f-c2a2-4ee9-8fb5-a420f8f9754f
+		sourceLineageTag: sentiment_key
+		summarizeBy: none
+		sourceColumn: sentiment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_sentiment = entity
+		mode: directLake
+		source
+			entityName: dim_sentiment
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

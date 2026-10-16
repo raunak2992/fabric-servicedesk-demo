@@ -1,0 +1,33 @@
+/// Customer type associated with each ticket: individual, small_business, enterprise, education, or non_profit. Sourced directly from the ticket dataset.
+table dim_customer_segment
+	lineageTag: c15e9fc9-4bce-4102-b854-ae5949b0d360
+	sourceLineageTag: [dbo].[dim_customer_segment]
+
+	column customer_segment
+		dataType: string
+		lineageTag: 2a7639ce-7491-4cb1-bb7d-d5578f769d54
+		sourceLineageTag: customer_segment
+		summarizeBy: none
+		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column segment_key
+		dataType: int64
+		formatString: 0
+		lineageTag: b32d6503-c863-4f9d-8998-7790dca23785
+		sourceLineageTag: segment_key
+		summarizeBy: none
+		sourceColumn: segment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_customer_segment = entity
+		mode: directLake
+		source
+			entityName: dim_customer_segment
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

@@ -1,0 +1,232 @@
+/// Grain: one row per support ticket. Contains all foreign keys to the dimension tables plus resolution metrics (resolution_time_hours, sla_breached, reopened, csat_score) and free-text fields (initial_message, agent_first_reply, resolution_summary). Sourced from a 100k-row synthetic SaaS helpdesk dataset covering 2022–2025.
+table fact_tickets
+	lineageTag: aa40cb4c-8e7d-43f1-a2aa-07e1326f87e0
+	sourceLineageTag: [dbo].[fact_tickets]
+
+	column ticket_id
+		dataType: string
+		lineageTag: 4f97cab7-7712-41d3-b1f4-9518f93574e8
+		sourceLineageTag: ticket_id
+		summarizeBy: none
+		sourceColumn: ticket_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a169492-5520-43e1-8d76-8623331600a9
+		sourceLineageTag: date_key
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column agent_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f4b9cc76-a03b-41f9-9b8c-c13d86afdc40
+		sourceLineageTag: agent_key
+		summarizeBy: none
+		sourceColumn: agent_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column segment_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f6057774-ee47-4b7c-901a-99a8e8eed2b8
+		sourceLineageTag: segment_key
+		summarizeBy: none
+		sourceColumn: segment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 00ed7b7d-5f1c-45e0-adaa-8e7ef95ff912
+		sourceLineageTag: channel_key
+		summarizeBy: none
+		sourceColumn: channel_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: fd6345b6-33c9-42ea-a6a5-1fa95d1aeb26
+		sourceLineageTag: product_key
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column issue_type_key
+		dataType: int64
+		formatString: 0
+		lineageTag: cddc1dd7-54bf-4bc2-8b37-9e11a900c6be
+		sourceLineageTag: issue_type_key
+		summarizeBy: none
+		sourceColumn: issue_type_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column priority_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 566a219e-d132-4867-8796-7f5854cd582b
+		sourceLineageTag: priority_key
+		summarizeBy: none
+		sourceColumn: priority_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 50c01001-0a60-415f-aeef-4b7b2ab9e463
+		sourceLineageTag: status_key
+		summarizeBy: none
+		sourceColumn: status_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column sla_plan_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 492c204b-f2dd-4da3-8139-57f13198c93b
+		sourceLineageTag: sla_plan_key
+		summarizeBy: none
+		sourceColumn: sla_plan_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column sentiment_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f5a67369-f175-4271-b437-bba2da054926
+		sourceLineageTag: sentiment_key
+		summarizeBy: none
+		sourceColumn: sentiment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column platform_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b2d8190-5883-451a-9d39-0e3c808c1c06
+		sourceLineageTag: platform_key
+		summarizeBy: none
+		sourceColumn: platform_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 4df904fb-a9e7-47ab-9271-3912f195ead2
+		sourceLineageTag: region_key
+		summarizeBy: none
+		sourceColumn: region_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column resolution_time_hours
+		dataType: double
+		lineageTag: 05a94b1c-562c-47f5-b0e4-7571479a6b33
+		sourceLineageTag: resolution_time_hours
+		summarizeBy: sum
+		sourceColumn: resolution_time_hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column target_hours
+		dataType: double
+		lineageTag: ce5729df-b62c-49c5-8062-d02936bf30db
+		sourceLineageTag: target_hours
+		summarizeBy: none
+		sourceColumn: target_hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sla_breached
+		dataType: int64
+		formatString: 0
+		lineageTag: 73d759d0-0ea3-4851-9210-89655877f7ce
+		sourceLineageTag: sla_breached
+		summarizeBy: sum
+		sourceColumn: sla_breached
+
+		annotation SummarizationSetBy = Automatic
+
+	column reopened
+		dataType: int64
+		formatString: 0
+		lineageTag: 419426fe-b42d-403d-97bf-60e5ffe32b9c
+		sourceLineageTag: reopened
+		summarizeBy: sum
+		sourceColumn: reopened
+
+		annotation SummarizationSetBy = Automatic
+
+	column csat_score
+		dataType: int64
+		formatString: 0
+		lineageTag: f29a946f-92e6-4c04-ace2-a807846119c8
+		sourceLineageTag: csat_score
+		summarizeBy: sum
+		sourceColumn: csat_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_attachment
+		dataType: int64
+		formatString: 0
+		lineageTag: fd9aa233-647e-4a4b-af11-96bf985ecf62
+		sourceLineageTag: has_attachment
+		summarizeBy: sum
+		sourceColumn: has_attachment
+
+		annotation SummarizationSetBy = Automatic
+
+	column initial_message
+		dataType: string
+		lineageTag: d8331a75-4ef9-45f6-a57e-019382cec74e
+		sourceLineageTag: initial_message
+		summarizeBy: none
+		sourceColumn: initial_message
+
+		annotation SummarizationSetBy = Automatic
+
+	column agent_first_reply
+		dataType: string
+		lineageTag: 3c978257-3665-49c3-9327-18c96e381686
+		sourceLineageTag: agent_first_reply
+		summarizeBy: none
+		sourceColumn: agent_first_reply
+
+		annotation SummarizationSetBy = Automatic
+
+	column resolution_summary
+		dataType: string
+		lineageTag: 0f26a74b-38d9-4819-8322-3f4dcf572e84
+		sourceLineageTag: resolution_summary
+		summarizeBy: none
+		sourceColumn: resolution_summary
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_tickets = entity
+		mode: directLake
+		source
+			entityName: fact_tickets
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

@@ -1,0 +1,40 @@
+table dim_sla_target
+	lineageTag: bd7d40da-d5a4-4eb7-8556-f5610a24ae89
+	sourceLineageTag: [dbo].[dim_sla_target]
+
+	column priority
+		dataType: string
+		lineageTag: 2f8e8819-b93b-44c7-8a70-140704197d16
+		sourceLineageTag: priority
+		summarizeBy: none
+		sourceColumn: priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column sla_plan
+		dataType: string
+		lineageTag: 5a733eaf-3b79-4cb2-85e5-0151c995d86a
+		sourceLineageTag: sla_plan
+		summarizeBy: none
+		sourceColumn: sla_plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column target_hours
+		dataType: double
+		lineageTag: f6a799d9-a976-4098-8448-c7a7a3a9944d
+		sourceLineageTag: target_hours
+		summarizeBy: none
+		sourceColumn: target_hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_sla_target = entity
+		mode: directLake
+		source
+			entityName: dim_sla_target
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+

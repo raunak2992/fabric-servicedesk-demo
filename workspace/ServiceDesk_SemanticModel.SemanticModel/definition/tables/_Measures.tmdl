@@ -1,0 +1,73 @@
+table _Measures
+	lineageTag: d0ac40f0-efd5-40f9-b411-ba1fb46508ed
+
+	/// Count of all support tickets in the dataset, regardless of status. Base volume metric used across all other measures.
+	measure 'Total Tickets' = COUNTROWS(fact_tickets)
+		formatString: 0
+		displayFolder: Volume
+		lineageTag: 0c7aee4b-5e6b-4a10-a853-7a865dcb4fad
+
+	/// Count of tickets with a non-blank resolution_time_hours — i.e. tickets that have reached a resolved or closed state. Excludes tickets still open or in progress.
+	measure 'Resolved Tickets' = CALCULATE([Total Tickets], NOT(ISBLANK(fact_tickets[resolution_time_hours])))
+		formatString: 0
+		displayFolder: Volume
+		lineageTag: e623fc64-901a-4581-98c3-eb31ea256621
+
+	/// Share of resolved tickets whose resolution_time_hours exceeded the target_hours threshold defined for their sla_plan and priority combination (see dim_sla_target). SLA targets are a synthetic business rule defined for this demo, not sourced from the original dataset.
+	measure 'Avg Resolution Time (hrs)' = AVERAGE(fact_tickets[resolution_time_hours])
+		displayFolder: SLA
+		lineageTag: 2227f4e7-34ed-4cb0-aee1-861938d24ecd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Average hours between ticket creation and resolution, across resolved tickets only. Unresolved tickets are excluded, not counted as zero.
+	measure 'SLA Breach %' =
+			DIVIDE(
+			    CALCULATE([Total Tickets], fact_tickets[sla_breached] = 1),
+			    CALCULATE([Total Tickets], NOT(ISBLANK(fact_tickets[sla_breached]))),
+			    0
+			)
+		displayFolder: SLA
+		lineageTag: ca224666-c8f7-4785-846c-8f912a877464
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Share of all tickets flagged as reopened after initial resolution. A proxy for first-time-fix quality — higher values indicate more tickets requiring a second pass.
+	measure 'Reopen Rate' =
+			DIVIDE(
+			    CALCULATE([Total Tickets], fact_tickets[reopened] = 1),
+			    [Total Tickets], 0
+			)
+		displayFolder: Customer Experience
+		lineageTag: feec62aa-79ac-41c1-80ff-bc7c0c7976ab
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Average customer satisfaction score (1–5) across tickets with a submitted survey response. Tickets with csat_score = 0 (no response) are excluded from the average, not treated as a low score.
+	measure 'Avg CSAT' = AVERAGEX(FILTER(fact_tickets, fact_tickets[csat_score] > 0), fact_tickets[csat_score])
+		displayFolder: Customer Experience
+		lineageTag: b17dbea4-7a62-4475-a549-ae2c72107bd6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Count of tickets with no resolution_time_hours recorded — currently unresolved tickets sitting in the queue at any point in time.
+	measure 'Open Backlog' = CALCULATE([Total Tickets], ISBLANK(fact_tickets[resolution_time_hours]))
+		formatString: 0
+		displayFolder: Volume
+		lineageTag: 972c6acc-7543-49eb-aeea-ecd07f16f22e
+
+	column Value
+		formatString: 0
+		lineageTag: 0835ab43-550c-481c-b2be-5d415bfafe88
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = { BLANK() }
+
+	annotation PBI_Id = 4acaeba6edca48d093631d2776be5ef3
+

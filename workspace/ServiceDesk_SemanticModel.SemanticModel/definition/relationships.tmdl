@@ -1,0 +1,52 @@
+relationship 94fc338d-8fb0-9536-508c-f23134d51bec
+	fromColumn: fact_tickets.agent_key
+	toColumn: dim_agent.agent_key
+
+relationship ee1377ae-d8d9-0d67-56c3-48b31ff130e9
+	fromColumn: fact_tickets.channel_key
+	toColumn: dim_channel.channel_key
+
+relationship fc946f65-7f89-8101-3bdc-0bd398d3c21a
+	fromColumn: fact_tickets.segment_key
+	toColumn: dim_customer_segment.segment_key
+
+relationship c13fad18-3019-2ace-0b12-517a2fdba011
+	fromColumn: fact_tickets.date_key
+	toColumn: dim_date.date_key
+
+relationship 7e8b801e-4523-8253-7209-78073ee9302e
+	fromColumn: fact_tickets.issue_type_key
+	toColumn: dim_issue_type.issue_type_key
+
+relationship 0ab0c4f1-2ada-6598-defd-6c430130331e
+	fromColumn: fact_tickets.platform_key
+	toColumn: dim_platform.platform_key
+
+relationship f102f18d-7541-4ac4-d89b-a7981bcc1815
+	fromColumn: fact_tickets.priority_key
+	toColumn: dim_priority.priority_key
+
+relationship 2d1ad135-1779-4196-cfb3-2269025f1b0f
+	fromColumn: fact_tickets.product_key
+	toColumn: dim_product.product_key
+
+relationship 63d5eb07-1504-faa5-6607-719e19dbcd32
+	fromColumn: fact_tickets.region_key
+	toColumn: dim_region.region_key
+
+relationship 905d14cc-c001-ed4b-11d5-45115ef872ca
+	fromColumn: fact_tickets.sentiment_key
+	toColumn: dim_sentiment.sentiment_key
+
+relationship 1e0ee72c-4266-9b4c-affc-e2792e862f1a
+	fromColumn: fact_tickets.sla_plan_key
+	toColumn: dim_sla_plan.sla_plan_key
+
+relationship a9da67ea-ed4c-b8c2-47e5-c179d877f6b7
+	fromColumn: fact_tickets.target_hours
+	toColumn: dim_sla_target.target_hours
+
+relationship 3a99110a-e98a-07ec-6847-d4553c2ea2aa
+	fromColumn: fact_tickets.status_key
+	toColumn: dim_status.status_key
+

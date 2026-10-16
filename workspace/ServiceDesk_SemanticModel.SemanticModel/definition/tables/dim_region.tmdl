@@ -1,0 +1,33 @@
+/// Customer’s geographic region: NA, EU, APAC, LATAM, or MEA. Sourced directly from the ticket dataset.
+table dim_region
+	lineageTag: e468222f-3f1a-44e6-8b48-a465747860e2
+	sourceLineageTag: [dbo].[dim_region]
+
+	column region
+		dataType: string
+		lineageTag: e36b828b-e018-402e-9d2b-4dfe5ac60c84
+		sourceLineageTag: region
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_key
+		dataType: int64
+		formatString: 0
+		lineageTag: fa1eae29-da16-40c7-9e86-a518c78557ce
+		sourceLineageTag: region_key
+		summarizeBy: none
+		sourceColumn: region_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_region = entity
+		mode: directLake
+		source
+			entityName: dim_region
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

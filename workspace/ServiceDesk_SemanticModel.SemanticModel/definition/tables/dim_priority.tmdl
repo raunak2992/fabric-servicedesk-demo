@@ -1,0 +1,33 @@
+/// Support priority assigned to the ticket: low, medium, high, or urgent. Drives the SLA target applied in dim_sla_target. Sourced directly from the ticket dataset.
+table dim_priority
+	lineageTag: 5d45a8b3-222a-464c-b5d3-bc62c7947baf
+	sourceLineageTag: [dbo].[dim_priority]
+
+	column priority
+		dataType: string
+		lineageTag: 056bfe3e-07e5-412a-ab8a-39e9c1151669
+		sourceLineageTag: priority
+		summarizeBy: none
+		sourceColumn: priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column priority_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 22b1bd17-b541-4c4b-9428-e2826be112df
+		sourceLineageTag: priority_key
+		summarizeBy: none
+		sourceColumn: priority_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_priority = entity
+		mode: directLake
+		source
+			entityName: dim_priority
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+

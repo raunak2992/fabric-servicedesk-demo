@@ -1,0 +1,33 @@
+/// Current ticket state: open, in_progress, on_hold, resolved, or closed_no_action. Sourced directly from the ticket dataset.
+table dim_status
+	lineageTag: 5a127950-bc13-4435-8ce8-5dee6c012938
+	sourceLineageTag: [dbo].[dim_status]
+
+	column status
+		dataType: string
+		lineageTag: 88bd22c4-d6e2-4019-889c-0fa9c24d0a80
+		sourceLineageTag: status
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_key
+		dataType: int64
+		formatString: 0
+		lineageTag: af407621-98e0-4e81-b4eb-6f4a9aa7619c
+		sourceLineageTag: status_key
+		summarizeBy: none
+		sourceColumn: status_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_status = entity
+		mode: directLake
+		source
+			entityName: dim_status
+			schemaName: dbo
+			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
+
