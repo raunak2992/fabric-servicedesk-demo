@@ -1,3 +1,4 @@
+/// Synthetic SLA policy defined for this demo: target resolution hours by sla_plan and priority (12 rows, 2 to 72 hours). The source dataset has no SLA contract; these thresholds were authored to enable breach analysis.
 table dim_sla_target
 	lineageTag: bd7d40da-d5a4-4eb7-8556-f5610a24ae89
 	sourceLineageTag: [dbo].[dim_sla_target]
@@ -37,4 +38,6 @@ table dim_sla_target
 			entityName: dim_sla_target
 			schemaName: dbo
 			expressionSource: 'DirectLake - ServiceDeskDemo'
+
+	changedProperty = Description
 

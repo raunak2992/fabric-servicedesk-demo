@@ -1,0 +1,8 @@
+/// Synthetic demo role on synthetic data. Restricts rows to dim_region[region] = EU so the model can be tested with a report, an agent and an app. It has no business meaning.
+role 'Demo Region EU'
+	modelPermission: read
+
+	tablePermission dim_region = dim_region[region] = "EU"
+
+	annotation PBI_Id = 02ed8e3c6ff9427b8ba47d506c5bd548
+

@@ -1,4 +1,4 @@
-/// Synthetic SLA policy defined for this demo (target resolution hours by sla_plan × priority). The source dataset includes actual resolution times but no stated SLA contract, so these thresholds were authored to enable breach analysis.
+/// Support channel through which the ticket arrived: chat, email, in_app, phone_transcript, or web_form. Sourced directly from the ticket dataset.
 table dim_channel
 	lineageTag: e50568b2-d7f9-41fa-b7a2-dc2954c54d76
 	sourceLineageTag: [dbo].[dim_channel]

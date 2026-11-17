@@ -10,7 +10,7 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_QueryOrder = ["DirectLake - ServiceDeskDemo"]
 
-annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit"]
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit","TMDLView_Desktop"]
 
 ref table dim_agent
 ref table dim_channel
@@ -27,4 +27,7 @@ ref table dim_sla_target
 ref table dim_status
 ref table fact_tickets
 ref table _Measures
+
+ref role 'Demo Region EU'
+ref role 'Demo Region APAC'
 

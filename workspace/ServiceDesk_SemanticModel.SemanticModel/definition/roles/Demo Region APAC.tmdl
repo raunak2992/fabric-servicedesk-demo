@@ -1,0 +1,8 @@
+/// Synthetic demo role on synthetic data. Restricts rows to dim_region[region] = APAC so the model can be tested with a report, an agent and an app. It has no business meaning.
+role 'Demo Region APAC'
+	modelPermission: read
+
+	tablePermission dim_region = dim_region[region] = "APAC"
+
+	annotation PBI_Id = 20792618b1fb47199d19cf9f8cb770be
+

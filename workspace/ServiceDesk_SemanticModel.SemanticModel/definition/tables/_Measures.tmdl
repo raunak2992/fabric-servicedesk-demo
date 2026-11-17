@@ -13,24 +13,22 @@ table _Measures
 		displayFolder: Volume
 		lineageTag: e623fc64-901a-4581-98c3-eb31ea256621
 
-	/// Share of resolved tickets whose resolution_time_hours exceeded the target_hours threshold defined for their sla_plan and priority combination (see dim_sla_target). SLA targets are a synthetic business rule defined for this demo, not sourced from the original dataset.
+	/// Average hours between ticket creation and resolution, across resolved tickets only. Unresolved tickets are excluded, not counted as zero.
 	measure 'Avg Resolution Time (hrs)' = AVERAGE(fact_tickets[resolution_time_hours])
+		formatString: #,0.0
 		displayFolder: SLA
 		lineageTag: 2227f4e7-34ed-4cb0-aee1-861938d24ecd
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	/// Average hours between ticket creation and resolution, across resolved tickets only. Unresolved tickets are excluded, not counted as zero.
+	/// Share of resolved tickets whose resolution_time_hours exceeded the target_hours threshold defined for their sla_plan and priority combination (see dim_sla_target). SLA targets are a synthetic business rule defined for this demo, not sourced from the original dataset.
 	measure 'SLA Breach %' =
 			DIVIDE(
 			    CALCULATE([Total Tickets], fact_tickets[sla_breached] = 1),
 			    CALCULATE([Total Tickets], NOT(ISBLANK(fact_tickets[sla_breached]))),
 			    0
 			)
+		formatString: 0.0%
 		displayFolder: SLA
 		lineageTag: ca224666-c8f7-4785-846c-8f912a877464
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	/// Share of all tickets flagged as reopened after initial resolution. A proxy for first-time-fix quality — higher values indicate more tickets requiring a second pass.
 	measure 'Reopen Rate' =
@@ -38,23 +36,48 @@ table _Measures
 			    CALCULATE([Total Tickets], fact_tickets[reopened] = 1),
 			    [Total Tickets], 0
 			)
+		formatString: 0.0%
 		displayFolder: Customer Experience
 		lineageTag: feec62aa-79ac-41c1-80ff-bc7c0c7976ab
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	/// Average customer satisfaction score (1–5) across tickets with a submitted survey response. Tickets with csat_score = 0 (no response) are excluded from the average, not treated as a low score.
 	measure 'Avg CSAT' = AVERAGEX(FILTER(fact_tickets, fact_tickets[csat_score] > 0), fact_tickets[csat_score])
+		formatString: 0.00
 		displayFolder: Customer Experience
 		lineageTag: b17dbea4-7a62-4475-a549-ae2c72107bd6
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	/// Count of tickets with no resolution_time_hours recorded — currently unresolved tickets sitting in the queue at any point in time.
+	/// Count of tickets created in the selected period that have no resolution_time_hours. With no date filter this is every ticket never resolved. It is not a point-in-time backlog; use Backlog (End of Period) for that.
 	measure 'Open Backlog' = CALCULATE([Total Tickets], ISBLANK(fact_tickets[resolution_time_hours]))
 		formatString: 0
 		displayFolder: Volume
 		lineageTag: 972c6acc-7543-49eb-aeea-ecd07f16f22e
+
+	/// Point-in-time backlog: tickets created on or before the last date in the selection that were unresolved, or resolved after that date. Ignores the date filter on creation. Resolution timestamp is derived as creation date plus resolution_time_hours.
+	measure 'Backlog (End of Period)' =
+			VAR _end = MAX ( dim_date[date] )
+			VAR _endKey = MAX ( dim_date[date_key] )
+			RETURN
+			    CALCULATE (
+			        COUNTROWS (
+			            FILTER (
+			                fact_tickets,
+			                VAR _created =
+			                    DATE (
+			                        INT ( fact_tickets[date_key] / 10000 ),
+			                        MOD ( INT ( fact_tickets[date_key] / 100 ), 100 ),
+			                        MOD ( fact_tickets[date_key], 100 )
+			                    )
+			                RETURN
+			                    ISBLANK ( fact_tickets[resolution_time_hours] )
+			                        || _created + fact_tickets[resolution_time_hours] / 24 >= _end + 1
+			            )
+			        ),
+			        REMOVEFILTERS ( dim_date ),
+			        fact_tickets[date_key] <= _endKey
+			    )
+		formatString: 0
+		displayFolder: Volume
+		lineageTag: b71e12ed-5873-40f7-9f14-14fc815defec
 
 	column Value
 		formatString: 0
